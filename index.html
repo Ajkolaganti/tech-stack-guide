@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 Things That Matter More Than Your Tech Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F4EFE6;
+    --cream-2:#EAE2D3;
+    --ink:#211A12;
+    --ink-soft:#5B5347;
+    --clay:#B4530A;
+    --clay-deep:#8A3F08;
+    --rule:#D9CDB8;
+    --terminal:#1C1712;
+    --terminal-text:#E8E2D6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  .texture{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+    opacity:0.6;
+  }
+
+  .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:0 28px;}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 0; border-bottom:1px solid var(--rule);
+  }
+  .topbar .tag{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em;
+    color:var(--ink-soft); text-transform:uppercase;
+  }
+  .topbar .tag b{color:var(--clay);}
+  .save-btn{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em;
+    background:var(--ink); color:var(--cream); border:none; border-radius:3px;
+    padding:9px 14px; cursor:pointer; display:flex; align-items:center; gap:7px;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .save-btn:hover{background:var(--clay-deep);}
+  .save-btn:active{transform:scale(0.97);}
+  .save-btn svg{width:13px; height:13px; flex-shrink:0;}
+
+  .hero{padding:64px 0 40px;}
+  .hero .prompt-line{
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .hero .prompt-line .caret{color:var(--clay); font-weight:700;}
+  h1{
+    font-size:clamp(34px, 6vw, 54px); line-height:1.08; font-weight:700; margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  h1 .em{color:var(--clay); font-style:italic; font-weight:600;}
+  .subtitle{
+    font-size:17px; color:var(--ink-soft); max-width:560px; line-height:1.55; margin:18px 0 0;
+    font-style:italic;
+  }
+  .byline{
+    margin-top:28px; display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);
+  }
+  .byline .dot{width:5px; height:5px; border-radius:50%; background:var(--clay);}
+
+  .intro{
+    padding:30px 0 8px; font-size:18px; line-height:1.7; color:var(--ink);
+    border-top:1px solid var(--rule); margin-top:8px;
+  }
+
+  .toc{margin:36px 0 8px; padding:20px 22px; background:var(--terminal); border-radius:6px;}
+  .toc .toc-head{font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8270; letter-spacing:0.1em; margin-bottom:12px;}
+  .toc-list{list-style:none; margin:0; padding:0; display:grid; gap:9px;}
+  .toc-list a{
+    display:flex; gap:10px; align-items:baseline; text-decoration:none;
+    font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--terminal-text);
+    transition:color .15s ease, padding-left .15s ease;
+  }
+  .toc-list a:hover{color:#F2A65A; padding-left:4px;}
+  .toc-list .n{color:#F2A65A; font-weight:600;}
+
+  .section{padding:54px 0 0; border-top:1px solid var(--rule); scroll-margin-top:24px;}
+  .section:first-of-type{margin-top:18px;}
+  .sec-head{display:flex; gap:18px; align-items:flex-start;}
+  .sec-num{
+    font-family:'JetBrains Mono',monospace; font-size:15px; color:var(--clay); font-weight:700;
+    white-space:nowrap; padding-top:6px;
+  }
+  .sec-title{font-size:clamp(22px,4vw,28px); font-weight:600; line-height:1.25; margin:0;}
+  .framing{
+    margin:16px 0 22px; font-style:italic; color:var(--ink-soft); font-size:16.5px;
+    line-height:1.6; padding-left:46px;
+  }
+  .actions{margin:0 0 22px; padding-left:46px; display:grid; gap:11px;}
+  .action{
+    display:flex; gap:12px; align-items:flex-start; font-size:16px; line-height:1.55;
+  }
+  .action::before{
+    content:'›'; font-family:'JetBrains Mono',monospace; color:var(--clay); font-weight:700;
+    flex-shrink:0; padding-top:1px;
+  }
+  .example{
+    margin:18px 0 0 46px; background:var(--terminal); border-radius:6px;
+    padding:16px 18px; position:relative;
+  }
+  .example .ex-label{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#F2A65A;
+    letter-spacing:0.12em; margin-bottom:8px; display:flex; align-items:center; gap:6px;
+  }
+  .example .ex-label::before{content:'//';}
+  .example p{
+    margin:0; color:var(--terminal-text); font-style:italic; font-size:15px; line-height:1.6;
+    font-family:'Source Serif 4', Georgia, serif;
+  }
+
+  .takeaway{
+    margin-top:60px; padding:36px 0 50px; border-top:2px solid var(--clay);
+  }
+  .takeaway .tk-label{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.14em;
+    color:var(--clay); margin-bottom:10px;
+  }
+  .takeaway p{font-size:18px; line-height:1.65; color:var(--ink); margin:0 0 16px;}
+  .takeaway .cta-line{
+    font-weight:600; font-size:17px; color:var(--ink);
+  }
+
+  .share-bar{
+    border-top:1px solid var(--rule); padding:28px 0 50px;
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+  }
+  .share-left{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);}
+  .share-actions{display:flex; gap:10px;}
+  .icon-btn{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--rule);
+    background:transparent; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .15s ease, border-color .15s ease;
+  }
+  .icon-btn:hover{background:var(--ink); border-color:var(--ink);}
+  .icon-btn:hover svg{stroke:var(--cream);}
+  .icon-btn svg{width:16px; height:16px; stroke:var(--ink); transition:stroke .15s ease;}
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--cream); font-family:'JetBrains Mono',monospace;
+    font-size:13px; padding:11px 18px; border-radius:5px; opacity:0; pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease; z-index:10;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:600px){
+    .wrap{padding:0 18px;}
+    .framing, .actions, .example{padding-left:0; margin-left:0;}
+    .sec-head{gap:12px;}
+    .hero{padding:48px 0 30px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+<div class="texture"></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="tag">job_search<b>.guide</b> — v1</div>
+    <button class="save-btn" id="saveBtn" aria-label="Copy link to this guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      Save / Share
+    </button>
+  </div>
+
+  <section class="hero">
+    <p class="prompt-line"><span class="caret">$</span> whoami --before-applying</p>
+    <h1>6 things that matter <span class="em">more</span><br>than your tech stack</h1>
+    <p class="subtitle">A practical guide for engineers job hunting in 2026 — what actually moves the needle when the stack on your resume isn't the deciding factor.</p>
+    <div class="byline">
+      <span>Ajay Kolaganti</span><span class="dot"></span><span>Senior Java / Spring Boot Engineer</span><span class="dot"></span><span>7+ yrs</span>
+    </div>
+  </section>
+
+  <p class="intro">After 7+ years across finance, telecom, and insurance — and now job hunting again myself — the pattern is consistent: the engineers who stand out aren't the ones with the trendiest stack. They're the ones who can talk about their work in a way that makes an interviewer trust them. This guide breaks down the six things that consistently matter more than which framework is on your resume.</p>
+
+  <nav class="toc">
+    <div class="toc-head mono">JUMP TO →</div>
+    <ul class="toc-list">
+      <li><a href="#s1"><span class="n">01</span> Can you explain a decision, not just describe what you built?</a></li>
+      <li><a href="#s2"><span class="n">02</span> Do you know WHY your system was designed that way?</a></li>
+      <li><a href="#s3"><span class="n">03</span> Can you talk numbers — scale, latency, cost?</a></li>
+      <li><a href="#s4"><span class="n">04</span> Do you ask good questions, or just answer them?</a></li>
+      <li><a href="#s5"><span class="n">05</span> Is your resume telling a story, or listing tech?</a></li>
+      <li><a href="#s6"><span class="n">06</span> Are you targeting roles that fit, or applying everywhere?</a></li>
+    </ul>
+  </nav>
+
+  <section class="section" id="s1">
+    <div class="sec-head">
+      <div class="sec-num">01 /</div>
+      <h2 class="sec-title">Can you explain a decision, not just describe what you built?</h2>
+    </div>
+    <p class="framing">Anyone can list what they built. Fewer people can explain why they built it that way — and that's what interviewers are actually probing for.</p>
+    <div class="actions">
+      <div class="action">Before the interview, pick 2–3 projects and write down the key decisions you made: why this database, why this pattern, why this tradeoff.</div>
+      <div class="action">Practice saying the decision out loud in one sentence, then the reasoning in two more.</div>
+      <div class="action">If you inherited the decision (legacy code, team standard), say so honestly — and explain what you'd evaluate if you owned the call.</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>"We used optimistic locking instead of pessimistic because our write contention was low but read volume was high — pessimistic would've throttled reads for a problem we rarely had."</p>
+    </div>
+  </section>
+
+  <section class="section" id="s2">
+    <div class="sec-head">
+      <div class="sec-num">02 /</div>
+      <h2 class="sec-title">Do you know WHY your system was designed that way, not just how?</h2>
+    </div>
+    <p class="framing">"How" is implementation. "Why" is judgment. Senior-level interviews are almost always testing for the second one.</p>
+    <div class="actions">
+      <div class="action">For any system you've worked on, be ready to name the constraint that shaped it — scale, team size, deadline, legacy dependency, compliance requirement.</div>
+      <div class="action">Avoid pure feature-walkthroughs. Every explanation should connect back to a constraint or goal.</div>
+      <div class="action">If you don't know why a legacy decision was made, that's a fine answer too — say what you'd ask to find out.</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>"The service was monolithic because at the time we had one team and shipping speed mattered more than independent scaling — splitting it would've added coordination overhead with zero payoff."</p>
+    </div>
+  </section>
+
+  <section class="section" id="s3">
+    <div class="sec-head">
+      <div class="sec-num">03 /</div>
+      <h2 class="sec-title">Can you talk numbers — scale, latency, cost — not just features?</h2>
+    </div>
+    <p class="framing">Numbers signal you understood the impact of your work, not just the mechanics of it. Vague claims ("improved performance") read as junior; specific ones read as senior.</p>
+    <div class="actions">
+      <div class="action">For each major project, find at least one real number: requests/sec, latency before/after, cost saved, error rate reduced, team size, data volume.</div>
+      <div class="action">If exact numbers aren't available, use defensible estimates and say they're estimates.</div>
+      <div class="action">Numbers work best paired with the decision that produced them — the number alone isn't the story.</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>"Adding a caching layer cut average response time from ~800ms to under 120ms on our highest-traffic endpoint, and reduced DB load enough that we delayed a planned read-replica purchase."</p>
+    </div>
+  </section>
+
+  <section class="section" id="s4">
+    <div class="sec-head">
+      <div class="sec-num">04 /</div>
+      <h2 class="sec-title">Do you ask good questions in the interview, or just answer them?</h2>
+    </div>
+    <p class="framing">The questions you ask reveal how you think about a system before you've even touched it — and they're one of the few moments you control entirely.</p>
+    <div class="actions">
+      <div class="action">Prepare 3–4 questions in advance: about team structure, current pain points, what "success" looks like in 6 months, and a technical question about their actual stack or scale.</div>
+      <div class="action">Avoid questions answerable by a 30-second Google search (those signal low effort).</div>
+      <div class="action">Listen to the answers — a good follow-up question is more impressive than a long prepared one.</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>"What's the biggest technical pain point your team is dealing with right now that this role is meant to help solve?"</p>
+    </div>
+  </section>
+
+  <section class="section" id="s5">
+    <div class="sec-head">
+      <div class="sec-num">05 /</div>
+      <h2 class="sec-title">Is your resume telling a story, or just listing technologies?</h2>
+    </div>
+    <p class="framing">A resume that's a list of nouns (Java, Spring Boot, AWS, Kafka) is forgettable. A resume that shows a trajectory — what you owned, what changed because of you — is not.</p>
+    <div class="actions">
+      <div class="action">For each role, lead bullets with outcomes and ownership, not tool names. Tools can be a secondary line or skills section.</div>
+      <div class="action">Cut anything that doesn't support the story of the role you're applying for now — tailoring beats completeness.</div>
+      <div class="action">Read it as a stranger would: does it answer "what did this person actually change?" in under 10 seconds per role?</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>Weak: "Worked with Java, Spring Boot, AWS, SQL Server." Strong: "Rebuilt a legacy batch process into an event-driven service, cutting nightly processing time from 4 hours to 35 minutes."</p>
+    </div>
+  </section>
+
+  <section class="section" id="s6">
+    <div class="sec-head">
+      <div class="sec-num">06 /</div>
+      <h2 class="sec-title">Are you targeting roles that actually fit, or just applying everywhere?</h2>
+    </div>
+    <p class="framing">Volume-applying to anything with the right keyword is a numbers game that mostly produces fatigue. Fit-based targeting produces better conversations, faster.</p>
+    <div class="actions">
+      <div class="action">Before applying, check that the role's actual requirements (not just the title) match your real experience — title inflation is common on both sides.</div>
+      <div class="action">For roles requiring sponsorship, verify the sponsorship signal is real (recent filings, explicit language) rather than relying on a checkbox alone.</div>
+      <div class="action">Track what you apply to and why — patterns in what gets responses tell you more than any single rejection does.</div>
+    </div>
+    <div class="example">
+      <div class="ex-label mono">EXAMPLE</div>
+      <p>A "Senior Java Engineer" posting that's really a mid-level support role in disguise wastes both sides' time — reading the actual day-to-day responsibilities, not just the title, avoids that mismatch.</p>
+    </div>
+  </section>
+
+  <section class="takeaway">
+    <div class="tk-label mono">// THE TAKEAWAY</div>
+    <p>None of this means the stack doesn't matter — it gets you past the resume filter. But once you're in the room, the stack stops being the differentiator. How you reason about decisions, numbers, and fit is what does.</p>
+    <p class="cta-line">Save this. Run through it before your next interview.</p>
+  </section>
+
+  <div class="share-bar">
+    <div class="share-left mono">made by @hey_jay93</div>
+    <div class="share-actions">
+      <button class="icon-btn" id="copyBtn" aria-label="Copy link">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 6"/><path d="M14 11a5 5 0 0 0-7.07 0L5.5 12.41a5 5 0 0 0 7.07 7.07L14 18"/></svg>
+      </button>
+      <button class="icon-btn" id="printBtn" aria-label="Print or save as PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast mono" id="toast">Link copied</div>
+
+<script>
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 1800);
+  }
+  function copyLink(){
+    const url = window.location.href;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(()=>showToast('Link copied')).catch(()=>showToast('Copy failed — select & copy manually'));
+    } else {
+      showToast('Copy not supported in this view');
+    }
+  }
+  document.getElementById('saveBtn').addEventListener('click', copyLink);
+  document.getElementById('copyBtn').addEventListener('click', copyLink);
+  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+</script>
+
+</body>
+</html>
